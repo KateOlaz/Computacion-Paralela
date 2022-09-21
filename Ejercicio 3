@@ -1,0 +1,42 @@
+#include <iostream>
+#include <ctime>
+
+unsigned t0, t1;
+
+using namespace std;
+
+int main()
+{
+    int m = 50;
+    while(m<=1024)
+    {
+        int A[m][m], B[m][m], C[m][m];
+        int stride = 5;
+
+        t0 = clock();
+
+        for(int ii=0; ii<m; ii+=stride)
+        {
+            for(int jj=0; jj<m; jj+=stride)
+            {
+                for(int kk=0; kk<m; kk+=stride)
+                {
+                    for(int i=ii; i<ii+stride; ++i)
+                    {
+                        for(int j=jj; j<jj+stride; ++j)
+                        {
+                            for(int k=kk; k<kk+stride; ++k) 
+                                C[i][j] += A[i][k]*B[k][j];
+                        }
+                    }               
+                }
+            }
+        }
+        t1 = clock();
+        
+        double time1 = (double(t1 -t0)/CLOCKS_PER_SEC);
+        cout << m <<"  "<< time1 <<endl;
+        m = m+50;
+    }
+    
+}
